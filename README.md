@@ -1,2 +1,2 @@
 # FingerPainter
-Gesture-controlled finger painting in Python.
+Gesture-controlled finger painting.
