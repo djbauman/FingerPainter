@@ -20,6 +20,9 @@ py FingerPainter.py
 
 ## Requirements
 
+```
+pip install -r requirements.txt
+```
 * **python 3.x**
 * **opencv**
 * **mediapipe**
