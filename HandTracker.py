@@ -25,7 +25,7 @@ class Tracker():
     return img
 
 
-  def get_landmarks(self, img, hand_num=0, draw=True, log=False):                                       
+  def get_landmarks(self, img, hand_num=0, draw=True, log=True):                                       
     self.landmarks = []
     if self.results.multi_hand_landmarks:
       hand = self.results.multi_hand_landmarks[hand_num]
@@ -36,7 +36,7 @@ class Tracker():
         if log:
           print(f"ID: {id} X: {x_pixel} Y: {y_pixel}")                            # (Logging) Print landmarks and their locations to the console
         if draw:                                                                  # (Example) Taking action based on a specific landmark.
-          cv2.circle(img, (x_pixel, y_pixel), 8, (200,0,200), cv2.FILLED)
+          cv2.circle(img, (x_pixel, y_pixel), 10, (255,225,0), cv2.FILLED)
     return self.landmarks
 
 
@@ -65,14 +65,14 @@ def main():
   cap.set(3, 1280)
   cap.set(4, 720)
   detector = Tracker()
+  fingers = []
 
   while True:
     result, img = cap.read()
     img = detector.track_hands(img)
-    landmarks = detector.get_landmarks(img, log=False)
+    landmarks = detector.get_landmarks(img, log=True)
     if len(landmarks) != 0:
       fingers = detector.read_fingers()
-      print(fingers)
 
     # Calculate framerate
     current_time = time.time()
@@ -80,8 +80,9 @@ def main():
     prev_time = current_time
 
     # Display window
-    cv2.putText(img, "FPS: "+str(int(fps)), (10,70), cv2.FONT_HERSHEY_PLAIN, 2, (255,0,0), 2)
-    cv2.imshow("HandTracker", img)
+    cv2.putText(img, "FPS: "+str(int(fps)), (10,30), cv2.FONT_HERSHEY_PLAIN, 2, (0,215,0), 2)
+    cv2.putText(img, str(fingers), (450,100), cv2.FONT_HERSHEY_COMPLEX, 3, (200,20,200), 2)
+    cv2.imshow("HandTracker 🖐", img)
     cv2.waitKey(1)
 
 
