@@ -35,7 +35,7 @@ while True:
   img = cv2.flip(img, 1)
 
   # Identify hand landmarks
-  img = tracker.track_hands(img)
+  img = tracker.track_hands(img, draw=True)
   landmarks = tracker.get_landmarks(img, draw=False)
 
   if len(landmarks) > 0:
