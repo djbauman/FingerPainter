@@ -43,7 +43,7 @@ class Tracker():
   def read_fingers(self):
     fingers = []
     # Thumb
-    if self.landmarks[self.tip_ids[0]][1] > self.landmarks[self.tip_ids[0] - 1][1]: # TODO: refine this calculation to work for either thumb
+    if self.landmarks[self.tip_ids[0]][1] < self.landmarks[self.tip_ids[0] - 1][1]: # TODO: refine this calculation to work for either thumb
       fingers.append(1)
     else:
       fingers.append(0)
@@ -69,6 +69,7 @@ def main():
 
   while True:
     result, img = cap.read()
+    img = cv2.flip(img, 1)
     img = detector.track_hands(img)
     landmarks = detector.get_landmarks(img, log=True)
     if len(landmarks) != 0:
@@ -81,8 +82,8 @@ def main():
 
     # Display window
     cv2.putText(img, "FPS: "+str(int(fps)), (10,30), cv2.FONT_HERSHEY_PLAIN, 2, (0,215,0), 2)
-    cv2.putText(img, str(fingers), (450,100), cv2.FONT_HERSHEY_COMPLEX, 3, (200,20,200), 2)
-    cv2.imshow("HandTracker 🖐", img)
+    cv2.putText(img, str(fingers), (450,100), cv2.FONT_HERSHEY_COMPLEX, 3, (200,20,200), 3)
+    cv2.imshow("HandTracker", img)
     cv2.waitKey(1)
 
 
